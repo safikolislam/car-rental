@@ -67,6 +67,7 @@ const Login = () => {
 
   return (
     <>
+    <title>Log in |Rentify Car</title>
       <div className="hero bg-base-200">
         <div className="hero-content flex-col mt-20">
           <h1 className="text-5xl font-bold text-center mb-10">Login now!</h1>

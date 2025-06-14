@@ -66,7 +66,7 @@ const SignUp = () => {
 
   return (
     <>
-      <title>SignUp | CB</title>
+      <title>SignUp | Rentify Car</title>
       <div className="hero bg-base-200">
         <div className="hero-content flex-col mt-20">
           <h1 className="text-5xl font-bold text-center mb-10">SignUp!</h1>
