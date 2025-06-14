@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Image from '../assets/pexels-mikebirdy-1335077.jpg';
 import { Link } from 'react-router';
 

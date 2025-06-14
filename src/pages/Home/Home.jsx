@@ -1,4 +1,5 @@
 import Hero from "../../Components/Hero";
+import MainPart from "../../Components/MainPart";
 
 
 
@@ -8,6 +9,7 @@ const Home = () => {
         <div>
         <title>Home | Rentify Car</title>
         <Hero></Hero>
+        <MainPart></MainPart>
         </div>
     );
 };
