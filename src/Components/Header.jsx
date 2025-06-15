@@ -38,11 +38,16 @@ const Header = () => {
               My Bookings
             </Link>
           </li>
+               {user.photoURL && (
+                  <p className="flex gap-2 ml-3" >profile :<img  src={user.photoURL} alt='avatar' className='w-8 h-8 rounded-full hidden md:block' /></p>
+                )}
           <li>
-            <button onClick={logOut} className='btn btn-warning w-full text-left'>
+            <button onClick={logOut} className='btn bg-red-300 w-full text-left'>
               Logout
             </button>
+            
           </li>
+             
         </>
       ) : (
         <>
@@ -132,7 +137,7 @@ const Header = () => {
                 {user.photoURL && (
                   <img src={user.photoURL} alt='avatar' className='w-8 h-8 rounded-full hidden md:block' />
                 )}
-                <button className='btn btn-warning' onClick={logOut}>
+                <button className='btn bg-red-300 ' onClick={logOut}>
                   Logout
                 </button>
               </div>
