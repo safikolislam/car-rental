@@ -3,6 +3,9 @@ import Hero from "../../Components/Hero";
 import MainPart from "../../Components/MainPart";
 
 import CarCard from "../../Components/carCard";
+import Offers from "../../Components/Offer";
+import Offer from "../../Components/Offer";
+import CustomerReviews from "../../Components/CustomerReviews";
 
 
 
@@ -22,6 +25,9 @@ const Home = () => {
             cars.map(car=><CarCard key={car._id } car={car}></CarCard>)
          }
         </div>
+        
+        <Offer></Offer>
+        <CustomerReviews></CustomerReviews>
         </div>
     );
 };
