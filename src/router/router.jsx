@@ -25,6 +25,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:"AvailableCar",
+                  loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
                 Component:AvailableCar
             },
             {
@@ -46,6 +47,7 @@ export const router = createBrowserRouter([
             },
             {
                 path:'MyBookings',
+                  loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
                 Component:MyBookings
             },
           

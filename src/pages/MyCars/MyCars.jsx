@@ -83,9 +83,9 @@ const MyCars = () => {
       <h2 className="text-2xl font-semibold mb-6">My Cars</h2>
 
       {cars.length === 0 ? (
-        <p>
-          No cars added yet.{" "}
-          <Link to="/add-car" className="text-blue-600 underline">
+        <p className="font-semibold text-2xl text-center mt-40 min-h-screen  ">
+          No cars added yet.{" "}<br></br>
+          <Link to="/AddCar" className="text-blue-600 underline">
             Add a car
           </Link>
         </p>

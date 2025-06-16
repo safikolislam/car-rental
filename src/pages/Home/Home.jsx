@@ -7,6 +7,7 @@ import CarCard from "../../Components/carCard";
 import Offer from "../../Components/Offer";
 import CustomerReviews from "../../Components/CustomerReviews";
 import HowItWorks from "../../Components/HowItWorks";
+import { useEffect, useState } from "react";
 
 
 
@@ -14,10 +15,14 @@ import HowItWorks from "../../Components/HowItWorks";
 
 const Home = () => {
     const data = useLoaderData()
-    const cars= data?.data || [];
+ const [cars,setCars] =useState([data?.data || []])
    console.log(data.data);
 
-
+  useEffect(() => {
+    fetch('http://localhost:3000/cars/home') 
+      .then(res => res.json())
+      .then(data => setCars(data));
+  }, []);
     return (
         <div>
         <title>Home | Rentify Car</title>
