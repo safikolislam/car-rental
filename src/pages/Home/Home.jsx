@@ -3,10 +3,11 @@ import Hero from "../../Components/Hero";
 import MainPart from "../../Components/MainPart";
 
 import CarCard from "../../Components/carCard";
-import Offers from "../../Components/Offer";
+
 import Offer from "../../Components/Offer";
 import CustomerReviews from "../../Components/CustomerReviews";
 import HowItWorks from "../../Components/HowItWorks";
+
 
 
 
@@ -15,6 +16,8 @@ const Home = () => {
     const data = useLoaderData()
     const cars= data?.data || [];
    console.log(data.data);
+
+
     return (
         <div>
         <title>Home | Rentify Car</title>

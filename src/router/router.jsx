@@ -11,10 +11,12 @@ import AddCar from "../pages/AddCar/AddCar"
 import MyBookings from "../pages/MyBookings/MyBookings"
 import MyCars from "../pages/MyCars/MyCars"
 import axios from "axios"
+import ErrorPage from "../pages/ErrorPage/ErrorPage"
 export const router = createBrowserRouter([
     {
         path:'/',
         Component:RootLayout,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path:'/',
