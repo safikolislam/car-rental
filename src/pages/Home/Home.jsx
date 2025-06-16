@@ -6,6 +6,7 @@ import CarCard from "../../Components/carCard";
 import Offers from "../../Components/Offer";
 import Offer from "../../Components/Offer";
 import CustomerReviews from "../../Components/CustomerReviews";
+import HowItWorks from "../../Components/HowItWorks";
 
 
 
@@ -28,6 +29,7 @@ const Home = () => {
         
         <Offer></Offer>
         <CustomerReviews></CustomerReviews>
+        <HowItWorks></HowItWorks>
         </div>
     );
 };
