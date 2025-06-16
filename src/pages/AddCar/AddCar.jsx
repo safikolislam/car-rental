@@ -113,7 +113,18 @@ const AddCar = () => {
                         className="textarea textarea-bordered w-full mt-1"
                     ></textarea>
                 </div>
-
+               <div>
+  <label className="block text-sm font-medium text-gray-700">Availability</label>
+  <select
+    id="availability"
+    name="availability"
+    className="select select-bordered w-full mt-1"
+    defaultValue="Available"
+  >
+    <option value="Available">Available</option>
+    <option value="Unavailable">Unavailable</option>
+  </select>
+</div>
                 <div className="text-center">
                     <button type="submit" className="btn bg-red-300 w-full">Add Car</button>
                 </div>
@@ -124,4 +135,4 @@ const AddCar = () => {
 
 export default AddCar;
 
- 0
+ 

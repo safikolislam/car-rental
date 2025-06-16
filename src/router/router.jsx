@@ -39,6 +39,7 @@ export const router = createBrowserRouter([
             },
             {
              path:'MyCars',
+              loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
              Component:MyCars
             },
             {
