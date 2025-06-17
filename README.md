@@ -1,12 +1,37 @@
-# React + Vite
+# 🚗 Car Rental Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern and responsive web application that allows users to browse, book, and manage car rentals seamlessly. Designed for ease of use, scalability, and a smooth user experience.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## 🎯 Purpose
+
+The purpose of this project is to provide a convenient and efficient platform for users to rent cars online. It offers features like vehicle browsing, booking management, user authentication, and an admin dashboard for managing rentals.
+
+## ✨ Key Features
+
+- 🔍 **Browse Vehicles** – View a wide range of cars with detailed specs and rental pricing.
+- 📅 **Book Rentals** – Select dates, car model, and confirm booking in a few clicks.
+- 🔐 **User Authentication** – Secure login/signup functionality for users and admins.
+- 🛠️ **Admin Panel** – Manage listings, bookings, and user details from an admin dashboard.
+- 📱 **Responsive Design** – Fully responsive across desktop, tablet, and 
+
+## 📦 NPM Packages Used
+
+- **React** – Front-end library for building UI.
+- **React Router DOM** – For handling routing and navigation.
+- **Axios** – For making HTTP requests to the backend.
+- **Formik & Yup** – For handling form state and validation.
+- **React Icons** – For beautiful icons throughout the UI.
+- **React Bootstrap / Tailwind CSS** – (Choose one based on your project) for responsive styling.
+
+- **dotenv** – To manage environment variables.
+- **Nodemailer** – (Optional) For sending confirmation emails.
+- **Express** – (If full-stack) Backend server and routing.
+- **Mongoose** – (If using MongoDB) For object data modeling.
+
+## 📁 Project Structure (Front-End)
+
+
