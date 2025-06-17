@@ -4,6 +4,7 @@ import { Link } from "react-router";
 
 const AvailableCar = () => {
   const data = useLoaderData();
+
   const cars = data?.data || [];
 
   const [viewMode, setViewMode] = useState("grid");
@@ -54,8 +55,8 @@ const AvailableCar = () => {
         }
       >
         {sortedCars.map((car) => (
-          <div
-            key={car.id}
+          <div 
+            key={car._id} 
             className="border p-4 rounded shadow hover:shadow-lg transition"
           >
             <img
@@ -65,12 +66,12 @@ const AvailableCar = () => {
             />
             <h2 className="text-xl font-semibold mb-1">{car.model}</h2>
             <p className="text-gray-600 mb-1">Price: ${car.price}</p>
-            <Link
-              to={`/car/${car.id}`}
-              className="inline-block mt-auto bg-red-300 text-white px-4 py-2 rounded"
-            >
-              Book Now
-            </Link>
+         <Link
+      to={`/CarDetails/${car._id}`}
+      className="inline-block mt-auto bg-red-300 text-white px-4 py-2 rounded"
+    >
+      Book Now
+    </Link>
           </div>
         ))}
       </div>

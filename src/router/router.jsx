@@ -12,6 +12,8 @@ import MyBookings from "../pages/MyBookings/MyBookings"
 import MyCars from "../pages/MyCars/MyCars"
 import axios from "axios"
 import ErrorPage from "../pages/ErrorPage/ErrorPage"
+import CarDetails from "../pages/CarDetails/CarDetails"
+
 export const router = createBrowserRouter([
     {
         path:'/',
@@ -44,6 +46,13 @@ export const router = createBrowserRouter([
              path:'MyCars',
               loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
              Component:MyCars
+            },
+            {
+                path:"/CarDetails/:id",
+                 loader:({params})=>axios(`${import.meta.env.VITE_API_URL}/cars/${params.id}`),
+                Component:CarDetails,
+                
+
             },
             {
                 path:'MyBookings',
