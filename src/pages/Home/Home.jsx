@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 const Home = () => {
     const data = useLoaderData()
  const [cars,setCars] =useState([data?.data || []])
-   console.log(data.data);
+   
 
   useEffect(() => {
     fetch('http://localhost:3000/cars/home') 

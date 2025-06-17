@@ -13,6 +13,10 @@ import MyCars from "../pages/MyCars/MyCars"
 import axios from "axios"
 import ErrorPage from "../pages/ErrorPage/ErrorPage"
 import CarDetails from "../pages/CarDetails/CarDetails"
+import PrivateRoute from "../Components/privateRoute"
+import Loading from "../Components/Loading"
+
+
 
 export const router = createBrowserRouter([
     {
@@ -23,11 +27,13 @@ export const router = createBrowserRouter([
             {
                 path:'/',
                 loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
+                hydrateFallbackElement:<Loading></Loading>,
                 Component:Home,
             },
             {
                 path:"AvailableCar",
                   loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
+                  hydrateFallbackElement:<Loading></Loading>,
                 Component:AvailableCar
             },
             {
@@ -40,12 +46,13 @@ export const router = createBrowserRouter([
             },
             {
                 path:'AddCar',
-                Component:AddCar,
+                element:<PrivateRoute><AddCar></AddCar></PrivateRoute>
             },
             {
              path:'MyCars',
               loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
-             Component:MyCars
+              hydrateFallbackElement:<Loading></Loading>,
+             element:<PrivateRoute><MyCars></MyCars></PrivateRoute>
             },
             {
                 path:"/CarDetails/:id",
@@ -57,7 +64,8 @@ export const router = createBrowserRouter([
             {
                 path:'MyBookings',
                   loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
-                Component:MyBookings
+                  hydrateFallbackElement:<Loading></Loading>,
+                element:<PrivateRoute><MyBookings></MyBookings></PrivateRoute>
             },
           
         ]

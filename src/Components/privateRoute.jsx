@@ -1,8 +1,10 @@
 import  { use } from 'react';
 
 import { Navigate } from 'react-router';
-import Loading from '../Pages/Loading';
+
 import { AuthContext } from '../Provider/AuthProvider';
+import Loading from './Loading';
+
 
 const PrivateRoute = ({children}) => {
     const {user,loading} = use(AuthContext);
