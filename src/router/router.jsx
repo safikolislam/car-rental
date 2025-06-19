@@ -21,20 +21,20 @@ import Loading from "../Components/Loading"
 export const router = createBrowserRouter([
     {
         path:'/',
-        Component:RootLayout,
+        element:<RootLayout></RootLayout>,
         errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path:'/',
                 loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
                 hydrateFallbackElement:<Loading></Loading>,
-                Component:Home,
+                element:<Home></Home>
             },
             {
                 path:"AvailableCar",
                   loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
                   hydrateFallbackElement:<Loading></Loading>,
-                Component:AvailableCar
+                  element:<AvailableCar></AvailableCar>
             },
             {
                 path:'SignUp',
@@ -57,15 +57,15 @@ export const router = createBrowserRouter([
             {
                 path:"/CarDetails/:id",
                  loader:({params})=>axios(`${import.meta.env.VITE_API_URL}/cars/${params.id}`),
-                Component:CarDetails,
+                 element:<CarDetails></CarDetails>
                 
 
             },
             {
                 path:'MyBookings',
+                element:<PrivateRoute><MyBookings></MyBookings></PrivateRoute>,
                   loader:()=>axios(`${import.meta.env.VITE_API_URL}/cars`),
                   hydrateFallbackElement:<Loading></Loading>,
-                element:<PrivateRoute><MyBookings></MyBookings></PrivateRoute>
             },
           
         ]

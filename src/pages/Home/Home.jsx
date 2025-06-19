@@ -19,7 +19,7 @@ const Home = () => {
    
 
   useEffect(() => {
-    fetch('http://localhost:3000/cars/home') 
+    fetch('https://rentify-server-sigma.vercel.app/cars/home') 
       .then(res => res.json())
       .then(data => setCars(data));
   }, []);

@@ -10,7 +10,7 @@ const MyCars = () => {
  
   const fetchCars = async () => {
     try {
-      const res = await fetch("http://localhost:3000/cars");
+      const res = await fetch("https://rentify-server-sigma.vercel.app/cars");
       const data = await res.json();
       setCars(data);
     } catch (error) {
@@ -48,7 +48,7 @@ const MyCars = () => {
     if (!editingCar) return;
 
     try {
-      const res = await fetch(`http://localhost:3000/cars/${editingCar._id}`, {
+      const res = await fetch(`http://rentify-server-sigma.vercel.app/cars/${editingCar._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editFormData),
@@ -65,7 +65,7 @@ const MyCars = () => {
 
   const handleDelete = async (carId) => {
     try {
-      const res = await fetch(`http://localhost:3000/cars/${carId}`, {
+      const res = await fetch(`rentify-server-sigma.vercel.app/cars/${carId}`, {
         method: "DELETE",
       });
 
