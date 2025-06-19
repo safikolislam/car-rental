@@ -1,5 +1,8 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
+
+const API_BASE_URL = "https://rentify-server-sigma.vercel.app";
 
 const MyCars = () => {
   const [cars, setCars] = useState([]);
@@ -7,10 +10,9 @@ const MyCars = () => {
   const [editingCar, setEditingCar] = useState(null);
   const [editFormData, setEditFormData] = useState({});
 
- 
   const fetchCars = async () => {
     try {
-      const res = await fetch("https://rentify-server-sigma.vercel.app/cars");
+      const res = await fetch(`${API_BASE_URL}/cars`);
       const data = await res.json();
       setCars(data);
     } catch (error) {
@@ -48,15 +50,17 @@ const MyCars = () => {
     if (!editingCar) return;
 
     try {
-      const res = await fetch(`http://rentify-server-sigma.vercel.app/cars/${editingCar._id}`, {
+      const res = await fetch(`${API_BASE_URL}/cars/${editingCar._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(editFormData),
       });
 
       if (res.ok) {
-        await fetchCars(); 
+        await fetchCars();
         setEditingCar(null);
+      } else {
+        console.error("Failed to update car");
       }
     } catch (error) {
       console.error("Error updating car:", error);
@@ -65,13 +69,15 @@ const MyCars = () => {
 
   const handleDelete = async (carId) => {
     try {
-      const res = await fetch(`rentify-server-sigma.vercel.app/cars/${carId}`, {
+      const res = await fetch(`${API_BASE_URL}/cars/${carId}`, {
         method: "DELETE",
       });
 
       if (res.ok) {
-        await fetchCars(); 
+        await fetchCars();
         setShowModalCarId(null);
+      } else {
+        console.error("Failed to delete car");
       }
     } catch (error) {
       console.error("Error deleting car:", error);
@@ -83,15 +89,16 @@ const MyCars = () => {
       <h2 className="text-2xl font-semibold mb-6">My Cars</h2>
 
       {cars.length === 0 ? (
-        <p className="font-semibold text-2xl text-center mt-40 min-h-screen  ">
-          No cars added yet.{" "}<br></br>
+        <p className="font-semibold text-2xl text-center mt-40 min-h-screen">
+          No cars added yet.
+          <br />
           <Link to="/AddCar" className="text-blue-600 underline">
             Add a car
           </Link>
         </p>
       ) : (
         <>
-      
+     
           <div className="hidden sm:block overflow-x-auto">
             <table className="table table-zebra w-full min-w-[900px]">
               <thead>
@@ -111,7 +118,11 @@ const MyCars = () => {
                   <tr key={car._id}>
                     <td>{index + 1}</td>
                     <td>
-                      <img src={car.imageUrl} alt={car.model} className="w-12 h-12 object-cover rounded" />
+                      <img
+                        src={car.imageUrl}
+                        alt={car.model}
+                        className="w-12 h-12 object-cover rounded"
+                      />
                     </td>
                     <td>{car.model}</td>
                     <td>${car.price}</td>
@@ -119,13 +130,19 @@ const MyCars = () => {
                     <td>
                       <span
                         className={`badge ${
-                          car.availability === "Available" ? "badge-success" : "badge-error"
+                          car.availability === "Available"
+                            ? "badge-success"
+                            : "badge-error"
                         }`}
                       >
                         {car.availability}
                       </span>
                     </td>
-                    <td>{car.dateAdded ? new Date(car.dateAdded).toLocaleDateString() : "N/A"}</td>
+                    <td>
+                      {car.dateAdded
+                        ? new Date(car.dateAdded).toLocaleDateString()
+                        : "N/A"}
+                    </td>
                     <td>
                       <div className="flex gap-2">
                         <button
@@ -148,26 +165,41 @@ const MyCars = () => {
             </table>
           </div>
 
-       
+        
           <div className="sm:hidden space-y-4 mt-4">
             {cars.map((car) => (
               <div key={car._id} className="border p-4 rounded shadow">
                 <div className="flex gap-4 items-center">
-                  <img src={car.imageUrl} alt={car.model} className="w-20 h-20 object-cover rounded" />
+                  <img
+                    src={car.imageUrl}
+                    alt={car.model}
+                    className="w-20 h-20 object-cover rounded"
+                  />
                   <div>
                     <h3 className="font-bold text-lg">{car.model}</h3>
                     <p className="text-sm text-gray-600">${car.price} / day</p>
-                    <p className="text-sm text-gray-600">Bookings: {car.bookingCount || 0}</p>
+                    <p className="text-sm text-gray-600">
+                      Bookings: {car.bookingCount || 0}
+                    </p>
                   </div>
                 </div>
                 <p className="mt-2 text-sm">
                   Availability:{" "}
-                  <span className={`badge ${car.availability === "Available" ? "badge-success" : "badge-error"}`}>
+                  <span
+                    className={`badge ${
+                      car.availability === "Available"
+                        ? "badge-success"
+                        : "badge-error"
+                    }`}
+                  >
                     {car.availability}
                   </span>
                 </p>
                 <p className="text-sm text-gray-500">
-                  Date Added: {car.dateAdded ? new Date(car.dateAdded).toLocaleDateString() : "N/A"}
+                  Date Added:{" "}
+                  {car.dateAdded
+                    ? new Date(car.dateAdded).toLocaleDateString()
+                    : "N/A"}
                 </p>
                 <div className="mt-2">
                   <button
@@ -187,19 +219,29 @@ const MyCars = () => {
             ))}
           </div>
 
-        
           {showModalCarId && (
             <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
               <div className="bg-white p-6 rounded shadow max-w-sm w-full">
                 <p>
                   Are you sure you want to delete{" "}
-                  <strong>{cars.find((car) => car._id === showModalCarId)?.model}</strong>?
+                  <strong>
+                    {
+                      cars.find((car) => car._id === showModalCarId)?.model
+                    }
+                  </strong>
+                  ?
                 </p>
                 <div className="flex justify-end gap-2 mt-4">
-                  <button onClick={() => setShowModalCarId(null)} className="btn btn-sm btn-secondary">
+                  <button
+                    onClick={() => setShowModalCarId(null)}
+                    className="btn btn-sm btn-secondary"
+                  >
                     Cancel
                   </button>
-                  <button onClick={() => handleDelete(showModalCarId)} className="btn btn-sm btn-error">
+                  <button
+                    onClick={() => handleDelete(showModalCarId)}
+                    className="btn btn-sm btn-error"
+                  >
                     Confirm Delete
                   </button>
                 </div>
@@ -207,7 +249,7 @@ const MyCars = () => {
             </div>
           )}
 
-   
+        
           {editingCar && (
             <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
               <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
@@ -279,10 +321,16 @@ const MyCars = () => {
                   />
                 </div>
                 <div className="flex justify-end gap-2 mt-4">
-                  <button onClick={() => setEditingCar(null)} className="btn btn-sm btn-secondary">
+                  <button
+                    onClick={() => setEditingCar(null)}
+                    className="btn btn-sm btn-secondary"
+                  >
                     Cancel
                   </button>
-                  <button onClick={handleUpdate} className="btn btn-sm btn-primary">
+                  <button
+                    onClick={handleUpdate}
+                    className="btn btn-sm btn-primary"
+                  >
                     Save Changes
                   </button>
                 </div>
@@ -296,8 +344,6 @@ const MyCars = () => {
 };
 
 export default MyCars;
-
-
 
 
 
