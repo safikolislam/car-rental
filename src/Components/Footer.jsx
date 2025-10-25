@@ -10,7 +10,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-base-400 text-base-content text-center py-8">
+    <footer className="bg-base-200 text-base-content text-center py-8">
   
       <div className="flex flex-col items-center">
         <img src={logo} alt="Logo" className="h-12 mb-2" />

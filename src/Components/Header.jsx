@@ -1,16 +1,12 @@
-// Header.jsx
 import { useContext, useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router' // FIX: use 'react-router-dom' for <Link> and hooks
+import { Link, useLocation } from 'react-router'
 import { AuthContext } from '../Provider/AuthProvider'
 import img from '../assets/carImage.png'
 import { Menu, X } from 'lucide-react'
 
 const Header = () => {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-
-  const handleToggle = (e) => {
-    setTheme(e.target.checked ? 'dark' : 'light');
-  }
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light')
+  const handleToggle = (e) => setTheme(e.target.checked ? 'dark' : 'light')
 
   useEffect(() => {
     localStorage.setItem('theme', theme)
@@ -18,15 +14,8 @@ const Header = () => {
   }, [theme])
 
   const { user, logOut } = useContext(AuthContext)
-
-  const location = useLocation() 
+  const location = useLocation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  
-  const isActive = (path) =>
-    location.pathname === path
-      ? 'text-primary font-bold' 
-      : 'text-base-content/80 hover:text-primary transition-colors' 
 
   const handleLogout = async () => {
     try {
@@ -48,6 +37,13 @@ const Header = () => {
       : []),
   ]
 
+  const getButtonClass = (path) =>
+    `btn btn-sm rounded-full px-5 py-2 ${
+      location.pathname === path
+        ? 'bg-blue-700 text-white border-blue-700'
+        : 'bg-transparent border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white'
+    }`
+
   return (
     <header
       className={`sticky top-0 z-50 backdrop-blur-lg shadow-lg border-b border-base-300 ${
@@ -56,8 +52,6 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          
-     
           <Link
             to="/"
             className="flex items-center gap-2 text-2xl font-extrabold text-base-content"
@@ -66,14 +60,16 @@ const Header = () => {
             <span className="hidden sm:inline-block">Rentify Car</span>
           </Link>
 
-        
           <nav className="hidden lg:flex items-center gap-6">
             {navLinks.map(({ path, label }) => (
               <Link
                 key={path}
                 to={path}
-             
-                className={`text-lg transition-colors ${isActive(path)}`}
+                className={`text-lg transition-colors px-4 py-2 rounded-lg ${
+                  location.pathname === path
+                    ? 'text-blue-700 font-bold'
+                    : 'text-base-content/80 hover:text-blue-600 transition'
+                }`}
               >
                 {label}
               </Link>
@@ -82,59 +78,55 @@ const Header = () => {
             {user ? (
               <div className="flex items-center gap-3">
                 {user.photoURL && (
-                
                   <img
                     src={user.photoURL}
                     alt="User"
-                    className="w-9 h-9 rounded-full border-2 border-primary shadow-md"
-                    title={user.displayName || user.email} ></img>
+                    className="w-9 h-9 rounded-full border-2 border-blue-700 shadow-md"
+                    title={user.displayName || user.email}
+                  />
                 )}
                 <button
                   onClick={handleLogout}
-                  
-                  className="btn btn-sm btn-primary hover:bg-opacity-80 transition"
+                  className="btn btn-sm rounded-full px-5 py-2 bg-blue-700 text-white border-blue-700 hover:bg-blue-800"
                 >
                   Logout
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <Link
-                  to="/Login"
-                 
-                  className="btn btn-sm btn-primary hover:bg-opacity-80 transition"
-                >
+                <Link to="/Login" className={getButtonClass('/Login')}>
                   Login
                 </Link>
-                <Link
-                  to="/SignUp"
-                
-                  className="btn btn-sm btn-outline btn-primary transition"
-                >
+                <Link to="/SignUp" className={getButtonClass('/SignUp')}>
                   Sign Up
                 </Link>
               </div>
             )}
           </nav>
 
-      
           <div className="flex items-center gap-2">
-         
             <label className="swap swap-rotate text-base-content/80">
-                <input
-                    type="checkbox"
-                    className="theme-controller"
-                    onChange={handleToggle}
-                    checked={theme === 'dark'}
-                />
-            
-              <svg className="swap-off fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,6.34a1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41L5.64,4.93a1,1,0,0,0-1.41,1.41ZM18.36,6.34a1,1,0,0,0,.71-.29l.71-.71a1,1,0,0,0-1.41-1.41l-.71.71A1,1,0,0,0,18.36,6.34ZM12,8A4,4,0,1,0,16,12,4,4,0,0,0,12,8Zm4.95,5.05a1,1,0,0,0-1.41,1.41l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19Z" />
-                </svg>
-              
-                <svg aria-label="moon" className="swap-on fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.18,8.18,0,0,1,.73-3.37,1,1,0,0,0-.14-1.05h0A9,9,0,1,0,21.64,13Z" />
-                </svg>
+              <input
+                type="checkbox"
+                className="theme-controller"
+                onChange={handleToggle}
+                checked={theme === 'dark'}
+              />
+              <svg
+                className="swap-off fill-current w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,6.34a1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41L5.64,4.93a1,1,0,0,0-1.41,1.41ZM18.36,6.34a1,1,0,0,0,.71-.29l.71-.71a1,1,0,0,0-1.41-1.41l-.71.71A1,1,0,0,0,18.36,6.34ZM12,8A4,4,0,1,0,16,12,4,4,0,0,0,12,8Zm4.95,5.05a1,1,0,0,0-1.41,1.41l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19Z" />
+              </svg>
+              <svg
+                aria-label="moon"
+                className="swap-on fill-current w-6 h-6"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.18,8.18,0,0,1,.73-3.37,1,1,0,0,0-.14-1.05h0A9,9,0,1,0,21.64,13Z" />
+              </svg>
             </label>
 
             <button
@@ -146,16 +138,17 @@ const Header = () => {
           </div>
         </div>
 
-      
         {isMenuOpen && (
-          <div
-            className={`lg:hidden flex flex-col space-y-1 pb-4 border-t mt-2 bg-base-100 shadow-xl`}
-          >
+          <div className="lg:hidden flex flex-col space-y-1 pb-4 border-t mt-2 bg-base-100 shadow-xl">
             {navLinks.map(({ path, label }) => (
               <Link
                 key={path}
                 to={path}
-                className={`block px-4 py-3 text-lg rounded-lg ${isActive(path)}`}
+                className={`block px-4 py-3 text-lg rounded-lg ${
+                  location.pathname === path
+                    ? 'text-white bg-blue-600'
+                    : 'text-base-content/80 hover:text-blue-600 transition'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {label}
@@ -168,8 +161,7 @@ const Header = () => {
                   <img
                     src={user.photoURL}
                     alt="User"
-                 
-                    className="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                    className="w-10 h-10 rounded-full border-2 border-blue-600 shadow-md"
                     title={user.displayName || user.email}
                   />
                 )}
@@ -178,8 +170,7 @@ const Header = () => {
                     handleLogout()
                     setIsMenuOpen(false)
                   }}
-                
-                  className="w-full btn btn-primary transition"
+                  className="w-full btn rounded-full px-5 py-2 bg-blue-700 text-white border-blue-700"
                 >
                   Logout
                 </button>
@@ -189,16 +180,22 @@ const Header = () => {
                 <Link
                   to="/Login"
                   onClick={() => setIsMenuOpen(false)}
-             
-                  className="w-full btn btn-primary text-center"
+                  className={`w-full btn rounded-full px-5 py-2 ${
+                    location.pathname === '/Login'
+                      ? 'bg-blue-700 text-white border-blue-700'
+                      : 'bg-transparent border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white'
+                  }`}
                 >
                   Login
                 </Link>
                 <Link
                   to="/SignUp"
                   onClick={() => setIsMenuOpen(false)}
-                  
-                  className="w-full btn btn-outline btn-primary text-center"
+                  className={`w-full btn rounded-full px-5 py-2 ${
+                    location.pathname === '/SignUp'
+                      ? 'bg-blue-700 text-white border-blue-700'
+                      : 'bg-transparent border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white'
+                  }`}
                 >
                   Sign Up
                 </Link>
@@ -212,4 +209,7 @@ const Header = () => {
 }
 
 export default Header
+
+
+
 

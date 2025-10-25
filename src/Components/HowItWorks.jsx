@@ -4,7 +4,7 @@ const HowItWorks = () => {
   return (
     <section
     
-      className="bg-base-200 py-20 px-4 md:px-8" 
+      className="bg-base-200 py-20 px-4 md:px-8 my-10" 
     >
       <div className="max-w-7xl mx-auto text-center">
       
@@ -36,7 +36,7 @@ const HowItWorks = () => {
             </div>
           </div>
 
-          {/* Step 2 */}
+         
           <div className="flex flex-col items-start card bg-base-100 shadow-xl border border-base-300 transform transition duration-300 hover:scale-[1.02] hover:shadow-2xl z-10">
             <div className="card-body p-8">
               <div className="badge badge-primary badge-lg text-2xl w-14 h-14 flex items-center justify-center rounded-full mb-6 font-bold">

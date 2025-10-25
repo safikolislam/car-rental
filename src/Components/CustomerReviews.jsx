@@ -4,7 +4,7 @@ const CustomerReviews = () => {
   return (
     <section 
   
-      className="bg-base-200 py-12 px-4"
+      className="bg-base-200 py-12 px-4 my-10"
     >
       <div className="max-w-7xl mx-auto text-center">
       
