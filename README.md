@@ -6,7 +6,7 @@ A modern and responsive web application that allows users to browse, book, and m
 
 
 
-## 🎯 Purpose
+##  Purpose
 
 The purpose of this project is to provide a convenient and efficient platform for users to rent cars online. It offers features like vehicle browsing, booking management, user authentication, and an admin dashboard for managing rentals.
 
@@ -30,7 +30,7 @@ The purpose of this project is to provide a convenient and efficient platform fo
 - **dotenv** – To manage environment variables.
 - **Nodemailer** – (Optional) For sending confirmation emails.
 - **Express** – (If full-stack) Backend server and routing.
-- **Mongoose** – (If using MongoDB) For object data modeling.
+
 
 ## 📁 Project Structure (Front-End)
 
