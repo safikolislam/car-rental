@@ -1,12 +1,13 @@
 
 import Hero from "../../Components/Hero";
-import MainPart from "../../Components/MainPart";
+import MainPart from "../../Components/WhyChooseUs";
 
 
 
 import Offer from "../../Components/Offer";
 import CustomerReviews from "../../Components/CustomerReviews";
 import HowItWorks from "../../Components/HowItWorks";
+import FAQ from "../../Components/FAQ";
 
 
 
@@ -26,6 +27,7 @@ const Home = () => {
         <Offer></Offer>
         <CustomerReviews></CustomerReviews>
         <HowItWorks></HowItWorks>
+        <FAQ></FAQ>
         </div>
     );
 };

@@ -3,16 +3,20 @@ import { useContext, useState, useRef, useEffect } from "react";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../Provider/AuthProvider";
-
+import axios from "axios";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Loading = () => (
-  <div className="p-8 text-center text-lg text-info">Loading...</div>
+  <div className="min-h-screen flex justify-center items-center bg-white">
+    <ClipLoader color="#3B82F6" size={50} />
+  </div>
 );
 
 const MyCars = () => {
   const { user, loading } = useContext(AuthContext);
   const queryClient = useQueryClient();
   const [editingCar, setEditingCar] = useState(null);
+  const [search, setSearch] = useState("");
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -23,7 +27,7 @@ const MyCars = () => {
     }
   }, [editingCar]);
 
-
+  // ------------------ Fetch User Cars ------------------
   const {
     data: cars = [],
     isLoading,
@@ -33,22 +37,18 @@ const MyCars = () => {
     queryKey: ["myCars", user?.email],
     enabled: !!user?.email && !loading,
     queryFn: async () => {
-      const res = await fetch(
+      const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/my-cars?email=${user.email}`
       );
-      if (!res.ok) throw new Error("Failed to fetch cars");
-      return res.json();
+      return res.data;
     },
   });
 
-
+  // ------------------ Delete Car ------------------
   const deleteCarMutation = useMutation({
     mutationFn: async (id) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/cars/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete car");
-      return res.json();
+      const res = await axios.delete(`${import.meta.env.VITE_API_URL}/cars/${id}`);
+      return res.data;
     },
     onSuccess: () => {
       toast.success("Car deleted successfully!");
@@ -57,42 +57,47 @@ const MyCars = () => {
     onError: () => toast.error("Failed to delete car!"),
   });
 
-
+  // ------------------ Update Car ------------------
   const updateCarMutation = useMutation({
     mutationFn: async (carData) => {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/${carData._id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(carData),
-      });
-      if (!res.ok) throw new Error("Failed to update car");
-      return res.json();
+      const res = await axios.put(
+        `${import.meta.env.VITE_API_URL}/cars/${carData._id}`,
+        carData
+      );
+      return res.data;
     },
     onSuccess: () => {
       toast.success("Car updated successfully!");
       setEditingCar(null);
       queryClient.invalidateQueries(["myCars", user?.email]);
     },
-    onError: () => toast.error("Failed to update car!"),
+    onError: (error) => {
+      toast.error(error.response?.data?.error || "Failed to update car!");
+    },
   });
 
+  // ------------------ Handle Update Form ------------------
+  const handleUpdateSubmit = (e) => {
+    e.preventDefault();
+    if (!editingCar) return;
+
+    const formData = new FormData(e.target);
+    const updatedData = Object.fromEntries(formData.entries());
+
+    const updatedCar = {
+      ...editingCar,
+      ...updatedData,
+      price: Number(updatedData.price),
+      features: updatedData.features || "",
+    };
+
+    updateCarMutation.mutate(updatedCar);
+  };
+
+  if (isLoading || loading) return <Loading />;
   if (isError) toast.error(error.message || "Something went wrong!");
 
-  if (loading || isLoading) return <Loading />;
-
-  if (cars.length === 0)
-    return (
-      <div className="text-center py-12 text-lg text-base-content">
-        You haven't added any cars yet.{" "}
-        <a
-          href="/add-car"
-          className="text-primary underline hover:text-primary-focus transition-colors"
-        >
-          Add a Car Now
-        </a>
-      </div>
-    );
-
+  // ------------------ Handle Delete ------------------
   const handleDelete = (car) => {
     Swal.fire({
       title: "Are you sure?",
@@ -111,36 +116,28 @@ const MyCars = () => {
     });
   };
 
-  const handleUpdateSubmit = (e) => {
-    e.preventDefault();
-    if (!editingCar) return;
+  // ------------------ Filtered Cars based on Search ------------------
+  const filteredCars = cars.filter((car) =>
+    car.model.toLowerCase().includes(search.toLowerCase())
+  );
 
-    const formData = new FormData(e.target);
-    const updatedData = Object.fromEntries(formData.entries());
-
-
-    const featuresArray = updatedData.features
-      ? updatedData.features
-          .split(",")
-          .map((f) => f.trim())
-          .filter((f) => f.length > 0)
-      : [];
-
-    const updatedCar = {
-      ...editingCar,
-      ...updatedData,
-      price: Number(updatedData.price),
-      features: featuresArray,
-    };
-
-    updateCarMutation.mutate(updatedCar);
-  };
-
+  // ------------------ JSX ------------------
   return (
     <div className="p-6 bg-base-100 min-h-screen">
-      <h2 className="text-3xl font-extrabold mb-6 text-base-content border-b pb-2">
+      <h2 className="text-3xl font-extrabold mb-4 text-base-content border-b pb-2">
         Your Listed Cars
       </h2>
+
+      {/* Search Input */}
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Search by car model..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="input input-bordered w-full max-w-sm"
+        />
+      </div>
 
       <div className="overflow-x-auto shadow-xl rounded-lg border border-base-300">
         <table className="table w-full table-zebra">
@@ -156,7 +153,14 @@ const MyCars = () => {
             </tr>
           </thead>
           <tbody>
-            {cars.map((car) => (
+            {filteredCars.length === 0 && (
+              <tr>
+                <td colSpan="7" className="text-center py-4">
+                  No cars found matching "{search}".
+                </td>
+              </tr>
+            )}
+            {filteredCars.map((car) => (
               <tr key={car._id} className="text-base-content/80">
                 <td>
                   <img
@@ -180,7 +184,9 @@ const MyCars = () => {
                     className={`badge ${
                       car.availability === "Available"
                         ? "badge-success"
-                        : "badge-warning"
+                        : car.availability === "Rented"
+                        ? "badge-warning"
+                        : "badge-error"
                     }`}
                   >
                     {car.availability || "Available"}
@@ -207,7 +213,7 @@ const MyCars = () => {
         </table>
       </div>
 
-   
+      {/* Edit Modal */}
       <dialog
         ref={modalRef}
         className="modal backdrop-blur-sm"
@@ -220,7 +226,7 @@ const MyCars = () => {
             </h3>
 
             <form onSubmit={handleUpdateSubmit} className="space-y-4">
-              {/* Image */}
+              {/* Image URL */}
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base-content/70">
@@ -242,7 +248,7 @@ const MyCars = () => {
                 />
               </div>
 
-       
+              {/* Model & Price */}
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="text"
@@ -262,52 +268,39 @@ const MyCars = () => {
                 />
               </div>
 
-            
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  name="location"
-                  defaultValue={editingCar.location || ""}
-                  placeholder="Location"
-                  className="input input-bordered w-full"
-                />
-                <input
-                  type="text"
-                  name="registration"
-                  defaultValue={editingCar.registration || ""}
-                  placeholder="Registration Number"
-                  className="input input-bordered w-full"
-                />
-              </div>
+              {/* Features */}
+              <input
+                type="text"
+                name="features"
+                defaultValue={
+                  typeof editingCar.features === "string"
+                    ? editingCar.features
+                    : ""
+                }
+                placeholder="Features (Comma separated)"
+                className="input input-bordered w-full"
+              />
 
-            
+              {/* Availability */}
               <div className="form-control">
+                <label className="label">
+                  <span className="label-text text-base-content/70">
+                    Availability
+                  </span>
+                </label>
                 <select
                   name="availability"
                   defaultValue={editingCar.availability || "Available"}
                   className="select select-bordered w-full"
+                  required
                 >
-                  <option disabled>Select Availability</option>
                   <option value="Available">Available</option>
                   <option value="Rented">Rented</option>
                   <option value="Maintenance">Maintenance</option>
                 </select>
               </div>
 
-       
-              <input
-                type="text"
-                name="features"
-                defaultValue={
-                  Array.isArray(editingCar.features)
-                    ? editingCar.features.join(", ")
-                    : editingCar.features || ""
-                }
-                placeholder="Features (Comma separated)"
-                className="input input-bordered w-full"
-              />
-
-          
+              {/* Description */}
               <textarea
                 name="description"
                 defaultValue={editingCar.description || ""}
@@ -329,17 +322,10 @@ const MyCars = () => {
                   className="btn btn-primary"
                   disabled={updateCarMutation.isPending}
                 >
-                  {updateCarMutation.isPending
-                    ? "Saving..."
-                    : "Save Changes"}
+                  {updateCarMutation.isPending ? "Saving..." : "Save Changes"}
                 </button>
               </div>
             </form>
-
-            <div
-              className="modal-backdrop"
-              onClick={() => setEditingCar(null)}
-            ></div>
           </div>
         )}
       </dialog>
@@ -348,6 +334,9 @@ const MyCars = () => {
 };
 
 export default MyCars;
+
+
+
 
 
 

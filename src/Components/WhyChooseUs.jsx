@@ -5,12 +5,23 @@ import booking from '../assets/booking.png';
 
 const MainPart = () => {
   return (
-    <div className="py-12 px-4 bg-base-200">
-      <h1 className="font-bold text-3xl text-center mb-10 text-base-content">Why Choose Us</h1>
+    <div className="py-12 px-4 bg-base-200 mt-30">
+      <h1
+        className="font-bold text-3xl text-center mb-10 text-base-content"
+        data-aos="zoom-in"
+        data-aos-duration="1200"
+      >
+        Why Choose Us
+      </h1>
 
       <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
-
-        <div className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300">
+     
+        <div
+          className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300"
+          data-aos="fade-right"
+          data-aos-delay="100"
+          data-aos-duration="1200"
+        >
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-base-300 p-3 flex items-center justify-center">
             <img className="w-full" src={carIcon} alt="Car Icon" />
           </div>
@@ -20,7 +31,13 @@ const MainPart = () => {
           </p>
         </div>
 
-        <div className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300">
+
+        <div
+          className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300"
+          data-aos="fade-up"
+          data-aos-delay="300"
+          data-aos-duration="1200"
+        >
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-base-300 p-3 flex items-center justify-center">
             <img className="w-full" src={price} alt="Price Icon" />
           </div>
@@ -30,7 +47,13 @@ const MainPart = () => {
           </p>
         </div>
 
-        <div className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300">
+      
+        <div
+          className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300"
+          data-aos="fade-left"
+          data-aos-delay="500"
+          data-aos-duration="1200"
+        >
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-base-300 p-3 flex items-center justify-center">
             <img className="w-full" src={booking} alt="Booking Icon" />
           </div>
@@ -40,7 +63,13 @@ const MainPart = () => {
           </p>
         </div>
 
-        <div className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300">
+     
+        <div
+          className="p-6 bg-base-100 rounded-xl shadow-lg hover:shadow-xl transition duration-300 text-center border border-base-300"
+          data-aos="fade-up"
+          data-aos-delay="700"
+          data-aos-duration="1200"
+        >
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-base-300 p-3 flex items-center justify-center">
             <img className="w-full" src={Support} alt="Support Icon" />
           </div>
@@ -49,10 +78,11 @@ const MainPart = () => {
             Our dedicated support team is available around the clock to assist you with any questions or issues.
           </p>
         </div>
-
       </div>
     </div>
   );
 };
 
 export default MainPart;
+
+

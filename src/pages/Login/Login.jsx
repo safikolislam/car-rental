@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
+
 import { FcGoogle } from "react-icons/fc";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { auth, AuthContext } from "../../Provider/AuthProvider";
 import loginImage from "../../assets/Mobile login-bro.png";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -55,7 +56,7 @@ const Login = () => {
     <>
       <title>Log in | Rentify Car</title>
 
-      <div className="min-h-screen bg-base-200 flex items-center justify-center px-6">
+      <div className="mb-5 min-h-screen bg-base-200 flex items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -144,7 +145,7 @@ const Login = () => {
               </motion.button>
             </form>
 
-            <ToastContainer position="top-center" />
+          
           </div>
         </motion.div>
       </div>
