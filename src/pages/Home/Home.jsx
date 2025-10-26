@@ -8,6 +8,7 @@ import Offer from "../../Components/Offer";
 import CustomerReviews from "../../Components/CustomerReviews";
 import HowItWorks from "../../Components/HowItWorks";
 import FAQ from "../../Components/FAQ";
+import LatestCars from "../../Components/LatestCar";
 
 
 
@@ -23,7 +24,7 @@ const Home = () => {
         <MainPart></MainPart>
        
      
-        
+         <LatestCars></LatestCars>
         <Offer></Offer>
         <CustomerReviews></CustomerReviews>
         <HowItWorks></HowItWorks>
