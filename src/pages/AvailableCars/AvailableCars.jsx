@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link } from "react-router";
+import { Link } from "react-router"; // ✅ correct import
 
 const fetchCars = async () => {
   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cars`);
@@ -19,21 +19,23 @@ const AvailableCars = () => {
   });
 
   if (isLoading)
-    return <div className="p-10 text-center text-lg">Loading cars...</div>;
+    return <div className="p-10 text-center text-lg text-base-content">Loading cars...</div>;
+
   if (isError)
-    return <div className="p-10 text-center text-red-500">Error loading cars.</div>;
+    return <div className="p-10 text-center text-error">Error loading cars.</div>;
+
   if (cars.length === 0)
-    return <div className="p-10 text-center text-gray-500">No cars available.</div>;
+    return <div className="p-10 text-center text-base-content/60">No cars available.</div>;
 
+  // ✅ Only show available cars
+  const availableOnlyCars = cars.filter((car) => car.availability === "Available");
 
-  const availableOnlyCars = cars.filter(car => car.availability === "Available");
-
- 
+  // ✅ Filter by search term
   const searchedCars = availableOnlyCars.filter((car) =>
     car.model.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
+  // ✅ Sorting logic
   const sortedCars = [...searchedCars].sort((a, b) => {
     switch (sortOption) {
       case "newest":
@@ -50,12 +52,11 @@ const AvailableCars = () => {
   });
 
   return (
-    <section className="min-h-screen bg-base-100 text-base-content py-12 px-4 sm:px-8 lg:px-12">
+    <section className="min-h-screen bg-base-100 text-base-content py-12 px-4 sm:px-8 lg:px-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
-
-      
+        {/* Header Controls */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-
+          {/* View Buttons */}
           <div className="flex gap-3">
             <button
               onClick={() => setView("grid")}
@@ -75,6 +76,7 @@ const AvailableCars = () => {
             </button>
           </div>
 
+          {/* Search Input */}
           <input
             type="text"
             placeholder="Search by model..."
@@ -83,6 +85,7 @@ const AvailableCars = () => {
             className="input input-bordered input-sm w-full sm:w-72 focus:outline-none focus:ring-2 focus:ring-primary"
           />
 
+          {/* Sort Dropdown */}
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
@@ -95,7 +98,7 @@ const AvailableCars = () => {
           </select>
         </div>
 
-     
+        {/* Cars Display */}
         <div
           className={`${
             view === "grid"
@@ -124,8 +127,8 @@ const AvailableCars = () => {
                 </figure>
                 <div className="card-body p-4">
                   <h2 className="card-title text-lg font-semibold">{car.model}</h2>
-                  <p> {car.features}</p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-base-content/70">{car.features}</p>
+                  <p className="text-sm text-base-content/60">
                     Added on: {new Date(car.dateAdded).toLocaleDateString()}
                   </p>
                   <p className="text-primary font-semibold text-base">${car.price}</p>
@@ -141,7 +144,7 @@ const AvailableCars = () => {
               </div>
             ))
           ) : (
-            <div className="col-span-full text-center text-gray-500 mt-10">
+            <div className="col-span-full text-center text-base-content/60 mt-10">
               No available cars found for “{searchTerm}”.
             </div>
           )}
@@ -152,6 +155,7 @@ const AvailableCars = () => {
 };
 
 export default AvailableCars;
+
 
 
 

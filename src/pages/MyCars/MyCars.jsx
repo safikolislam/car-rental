@@ -27,7 +27,7 @@ const MyCars = () => {
     }
   }, [editingCar]);
 
-  // ------------------ Fetch User Cars ------------------
+
   const {
     data: cars = [],
     isLoading,
@@ -44,7 +44,7 @@ const MyCars = () => {
     },
   });
 
-  // ------------------ Delete Car ------------------
+
   const deleteCarMutation = useMutation({
     mutationFn: async (id) => {
       const res = await axios.delete(`${import.meta.env.VITE_API_URL}/cars/${id}`);
@@ -57,7 +57,7 @@ const MyCars = () => {
     onError: () => toast.error("Failed to delete car!"),
   });
 
-  // ------------------ Update Car ------------------
+
   const updateCarMutation = useMutation({
     mutationFn: async (carData) => {
       const res = await axios.put(
@@ -76,7 +76,7 @@ const MyCars = () => {
     },
   });
 
-  // ------------------ Handle Update Form ------------------
+
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
     if (!editingCar) return;
@@ -97,7 +97,7 @@ const MyCars = () => {
   if (isLoading || loading) return <Loading />;
   if (isError) toast.error(error.message || "Something went wrong!");
 
-  // ------------------ Handle Delete ------------------
+ 
   const handleDelete = (car) => {
     Swal.fire({
       title: "Are you sure?",
@@ -116,19 +116,19 @@ const MyCars = () => {
     });
   };
 
-  // ------------------ Filtered Cars based on Search ------------------
+
   const filteredCars = cars.filter((car) =>
     car.model.toLowerCase().includes(search.toLowerCase())
   );
 
-  // ------------------ JSX ------------------
+
   return (
     <div className="p-6 bg-base-100 min-h-screen">
       <h2 className="text-3xl font-extrabold mb-4 text-base-content border-b pb-2">
         Your Listed Cars
       </h2>
 
-      {/* Search Input */}
+    
       <div className="mb-6">
         <input
           type="text"
@@ -213,7 +213,7 @@ const MyCars = () => {
         </table>
       </div>
 
-      {/* Edit Modal */}
+ 
       <dialog
         ref={modalRef}
         className="modal backdrop-blur-sm"
@@ -226,7 +226,7 @@ const MyCars = () => {
             </h3>
 
             <form onSubmit={handleUpdateSubmit} className="space-y-4">
-              {/* Image URL */}
+            
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base-content/70">
@@ -248,7 +248,7 @@ const MyCars = () => {
                 />
               </div>
 
-              {/* Model & Price */}
+            
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="text"
@@ -268,7 +268,7 @@ const MyCars = () => {
                 />
               </div>
 
-              {/* Features */}
+           
               <input
                 type="text"
                 name="features"
@@ -281,7 +281,7 @@ const MyCars = () => {
                 className="input input-bordered w-full"
               />
 
-              {/* Availability */}
+           
               <div className="form-control">
                 <label className="label">
                   <span className="label-text text-base-content/70">
@@ -300,7 +300,7 @@ const MyCars = () => {
                 </select>
               </div>
 
-              {/* Description */}
+            
               <textarea
                 name="description"
                 defaultValue={editingCar.description || ""}

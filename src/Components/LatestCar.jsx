@@ -16,22 +16,31 @@ const LatestCars = () => {
 
   if (isLoading) return <Loading />;
   if (isError)
-    return <p className="text-center mt-10 text-red-500">Error: {error.message}</p>;
+    return (
+      <p className="text-center mt-10 text-error">
+        Error: {error.message}
+      </p>
+    );
   if (!cars || cars.length === 0)
-    return <p className="text-center mt-10 text-gray-500">No cars available.</p>;
+    return (
+      <p className="text-center mt-10 text-base-content/60">
+        No cars available.
+      </p>
+    );
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-      <h2 className="text-3xl font-bold mb-8 text-center text-gray-800">
+      <h2 className="text-3xl font-bold mb-8 text-center text-base-content">
         Latest Cars
       </h2>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {cars.map((car) => (
           <div
             key={car._id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transform transition duration-300 overflow-hidden"
+            className="card bg-base-100 shadow-lg hover:shadow-xl hover:scale-105 transform transition duration-300 overflow-hidden"
           >
-            <div className="relative h-56">
+            <figure className="relative h-56">
               <img
                 src={car.imageUrl || "https://via.placeholder.com/300x200"}
                 alt={car.model || "Car Image"}
@@ -40,25 +49,33 @@ const LatestCars = () => {
               <span
                 className={`absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-semibold ${
                   car.availability === "Available"
-                    ? "bg-green-500 text-white"
-                    : "bg-red-500 text-white"
+                    ? "bg-success text-success-content"
+                    : "bg-error text-error-content"
                 }`}
               >
                 {car.availability}
               </span>
-            </div>
-            <div className="p-5">
-              <h3 className="text-lg font-semibold text-gray-900">{car.name}</h3>
-              <p className="text-gray-600 mt-1 text-sm">Model: {car.model}</p>
-              <p className="text-gray-600 mt-1 text-sm">
+            </figure>
+
+            <div className="card-body p-5 text-base-content">
+              <h3 className="text-lg font-semibold">{car.name}</h3>
+              <p className="mt-1 text-sm opacity-80">Model: {car.model}</p>
+              <p className="mt-1 text-sm opacity-80">
                 Registration: {car.registration}
               </p>
-              <p className="text-gray-600 mt-1 text-sm">Location: {car.location}</p>
-              <p className="text-gray-800 mt-2 font-bold text-lg">${car.price}</p>
+              <p className="mt-1 text-sm opacity-80">Location: {car.location}</p>
+
+              <p className="mt-3 font-bold text-lg text-primary">
+                ${car.price}
+              </p>
+
               {car.features && (
-                <p className="text-gray-500 mt-1 text-sm">Features: {car.features}</p>
+                <p className="mt-1 text-sm opacity-70">
+                  Features: {car.features}
+                </p>
               )}
-              <p className="text-gray-400 mt-2 text-xs">
+
+              <p className="mt-2 text-xs opacity-60">
                 Added on: {new Date(car.dateAdded).toLocaleDateString()}
               </p>
             </div>
@@ -70,6 +87,7 @@ const LatestCars = () => {
 };
 
 export default LatestCars;
+
 
 
 

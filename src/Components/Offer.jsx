@@ -1,61 +1,109 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { motion } from "framer-motion";
+import { useNavigate } from "react-router";
+import Loading from "./Loading";
 
-const Offer = () => {
-  const [cars, setCars] = useState([]);
+const fetchCars = async () => {
+  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cars`);
+  return data;
+};
 
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/latest-cars`);
-        
-        const shuffled = data.sort(() => 0.5 - Math.random());
-        setCars(shuffled.slice(0, 2));
-      } catch (error) {
-        console.error("Failed to fetch cars:", error);
-      }
-    };
+const SpecialOffers = () => {
+  const navigate = useNavigate();
 
-    fetchCars();
-  }, []);
+  const { data: cars = [], isLoading, isError } = useQuery({
+    queryKey: ["cars"],
+    queryFn: fetchCars,
+  });
+
+  if (isLoading) return <Loading />;
+  if (isError)
+    return (
+      <div className="text-center text-red-500 py-10">
+        Failed to load promotions
+      </div>
+    );
+
+  const displayedCars = cars.slice(0, 2);
+  const discountPercentage = 15;
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8 text-center">Special Offers</h2>
+    <section className="py-16 bg-base-100 transition-colors duration-300">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-extrabold mb-12 text-center text-blue-600 dark:text-blue-400">
+          Special Offers
+        </h2>
+
         <div className="grid md:grid-cols-2 gap-8">
-          {cars.map((car, index) => (
-            <motion.div
-              key={car._id}
-              className="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center cursor-pointer"
-              initial={{ x: index % 2 === 0 ? -200 : 200, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 100, damping: 15, delay: index * 0.2 }}
-              whileHover={{
-                scale: 1.05,
-                y: [0, -5, 0], 
-                transition: { duration: 0.4, repeat: Infinity, repeatType: "reverse" }
-              }}
-            >
-              <img
-                src={car.imageUrl}
-                alt={car.model}
-                className="w-full h-48 object-cover rounded-lg mb-4"
-              />
-              <h3 className="text-xl font-semibold mb-2">{car.name}</h3>
-              <p className="text-gray-600 mb-4">{car.description || "Special car offer!"}</p>
-              <p className="text-lg font-bold text-red-600 mb-4">${car.price}/day</p>
-          
-            </motion.div>
-          ))}
+          {displayedCars.map((car) => {
+            const discountedPrice = (car.price * (100 - discountPercentage)) / 100;
+
+            return (
+              <div
+                key={car._id}
+                className="relative card bg-base-200 shadow-2xl rounded-3xl overflow-hidden cursor-pointer border border-base-300 hover:shadow-3xl hover:bg-base-300 transition-all"
+                onClick={() => navigate("/AvailableCar")}
+              >
+                <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full z-10 shadow-lg">
+                  {discountPercentage}% OFF
+                </div>
+
+                <figure className="h-64 overflow-hidden">
+                  <img
+                    src={car.imageUrl}
+                    alt={car.name}
+                    className="w-full h-full object-cover"
+                  />
+                </figure>
+
+                <div className="card-body items-center text-center p-6">
+                  <h3 className="text-2xl font-bold mb-2 text-base-content">
+                    {car.name}
+                  </h3>
+                  <p className="text-base-content/70 mb-4">
+                    {car.description ||
+                      "Experience comfort, power, and style in one ride."}
+                  </p>
+
+                  <p className="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-4">
+                    <span className="line-through text-gray-400 mr-2">
+                      ${car.price}
+                    </span>
+                    <span>${discountedPrice.toFixed(2)}</span>/day
+                  </p>
+
+                  <button
+                    className="btn btn-primary rounded-full px-8 py-2 text-white"
+                  >
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
   );
 };
 
-export default Offer;
+export default SpecialOffers;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
