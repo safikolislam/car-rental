@@ -29,7 +29,7 @@ const SpecialOffers = () => {
   const discountPercentage = 15;
 
   return (
-    <section className="py-16 bg-base-100 transition-colors duration-300">
+    <section className="max-w-7xl mx-auto py-16 bg-base-100 transition-colors duration-300">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-extrabold mb-12 text-center text-blue-600 dark:text-blue-400">
           Special Offers

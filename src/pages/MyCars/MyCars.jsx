@@ -123,7 +123,7 @@ const MyCars = () => {
 
 
   return (
-    <div className="p-6 bg-base-100 min-h-screen">
+    <div className="p-6 bg-base-100 min-h-screen mx-auto max-w-7xl">
       <h2 className="text-3xl font-extrabold mb-4 text-base-content border-b pb-2">
         Your Listed Cars
       </h2>

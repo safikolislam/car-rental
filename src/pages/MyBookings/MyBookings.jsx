@@ -119,7 +119,7 @@ const MyBookings = () => {
   const totalPayment = bookingsWithTotals.reduce((sum, b) => sum + b.totalPrice, 0);
 
   return (
-    <div className="p-4 md:p-6 min-h-screen bg-base-100">
+    <div className="p-4 md:p-6 min-h-screen bg-base-100 mx-auto max-w-7xl">
       <h2 className="text-2xl md:text-3xl font-bold mb-4">My Bookings</h2>
       <p className="mb-6 font-semibold text-lg md:text-xl">
         Total Payment: <span className="text-primary">${totalPayment.toFixed(2)}</span>
