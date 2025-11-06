@@ -2,7 +2,7 @@ const CustomerReviews = () => {
   return (
     <section className="bg-base-200 py-12 px-4 my-10 mt-50">
       <div className="max-w-7xl mx-auto text-center">
-        {/* Section Title */}
+       
         <h2 
           className="text-3xl text-base-content font-bold mb-8"
           data-aos="zoom-in"
@@ -11,9 +11,8 @@ const CustomerReviews = () => {
           What Our Customers Say
         </h2>
 
-        {/* Review Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Card 1 */}
+      
           <div 
             className="bg-base-100 p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300"
             data-aos="zoom-in-up"
@@ -32,7 +31,7 @@ const CustomerReviews = () => {
             </p>
           </div>
 
-          {/* Card 2 */}
+   
           <div 
             className="bg-base-100 p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300"
             data-aos="zoom-in-up"
@@ -51,7 +50,7 @@ const CustomerReviews = () => {
             </p>
           </div>
 
-          {/* Card 3 */}
+    
           <div 
             className="bg-base-100 p-6 rounded-lg shadow-xl hover:shadow-2xl transition duration-300"
             data-aos="zoom-in-up"

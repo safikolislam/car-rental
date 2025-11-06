@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link } from "react-router"; // ✅ correct import
+import { Link } from "react-router"; 
 
 const fetchCars = async () => {
   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cars`);
@@ -27,15 +27,15 @@ const AvailableCars = () => {
   if (cars.length === 0)
     return <div className="p-10 text-center text-base-content/60">No cars available.</div>;
 
-  // ✅ Only show available cars
+
   const availableOnlyCars = cars.filter((car) => car.availability === "Available");
 
-  // ✅ Filter by search term
+
   const searchedCars = availableOnlyCars.filter((car) =>
     car.model.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // ✅ Sorting logic
+
   const sortedCars = [...searchedCars].sort((a, b) => {
     switch (sortOption) {
       case "newest":
@@ -54,9 +54,9 @@ const AvailableCars = () => {
   return (
     <section className="min-h-screen bg-base-100 text-base-content py-12 px-4 sm:px-8 lg:px-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto">
-        {/* Header Controls */}
+    
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          {/* View Buttons */}
+        
           <div className="flex gap-3">
             <button
               onClick={() => setView("grid")}
@@ -76,7 +76,7 @@ const AvailableCars = () => {
             </button>
           </div>
 
-          {/* Search Input */}
+       
           <input
             type="text"
             placeholder="Search by model..."
@@ -85,7 +85,7 @@ const AvailableCars = () => {
             className="input input-bordered input-sm w-full sm:w-72 focus:outline-none focus:ring-2 focus:ring-primary"
           />
 
-          {/* Sort Dropdown */}
+     
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}
@@ -98,7 +98,7 @@ const AvailableCars = () => {
           </select>
         </div>
 
-        {/* Cars Display */}
+   
         <div
           className={`${
             view === "grid"
