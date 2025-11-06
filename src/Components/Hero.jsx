@@ -22,11 +22,11 @@ const Hero = () => {
   if (availableCars.length > 0) {
     setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % availableCars.length);
-    }, 5000);
+    }, 20000);
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-base-100 rounded-lg overflow-hidden shadow-lg h-[300px] md:h-[400px] flex flex-col md:flex-row">
+    <div className="max-w-7xl mx-auto mt-10 bg-base-100 rounded-lg overflow-hidden shadow-lg h-[600px] md:h-[400px] flex flex-col md:flex-row">
       <div className="md:w-1/2 p-6 flex flex-col justify-center text-center md:text-left">
         <h1 className="text-3xl md:text-4xl font-bold mb-4">Your Next Car Awaits You</h1>
         <p className="text-base-700 mb-6">Browse our cars and find your perfect ride!</p>
